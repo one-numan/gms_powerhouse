@@ -29,6 +29,40 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+# ---------------------------------------------------------
+# Project Applications (Business Responsibility Split)
+#
+# accounts:
+#   - Handles gym owner / staff users
+#   - Authentication and login
+#   - Role-based access (owner, site_manager, gym_manager, staff)
+#
+# audits:
+#   - Stores audit and activity logs
+#   - Tracks critical actions (payments, subscriptions, deletions)
+#   - Helps in accountability and troubleshooting
+#
+# members:
+#   - Manages gym members (clients/customers)
+#   - Stores personal details and membership linkage
+#   - Members do not have login access (POC scope)
+#
+# organizations:
+#   - Manages gym companies and their branches
+#   - Enables multi-gym and multi-branch SaaS architecture
+#
+# subscriptions:
+#   - Core business logic of the system
+#   - Manages plans, memberships, renewals, and payments
+#   - Preserves full membership and payment history
+# ---------------------------------------------------------
+CUSTOM_APPS = [
+    'accounts',        # Gym owner / staff users, auth & roles
+    'audits',          # Audit logs & activity tracking
+    'members',         # Gym members (clients)
+    'organizations',   # Gym companies & branches
+    'subscriptions',   # Plans, memberships & payments
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +71,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+]+CUSTOM_APPS
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
