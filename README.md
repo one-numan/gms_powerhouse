@@ -70,12 +70,16 @@ These are planned for **Phase-2 / Production**.
 
 ```
 Organization
- └── Branch
-      ├── Users (Gym Owner / Staff)
-      ├── Members (Clients)
-      │    └── Subscriptions (Memberships)
-      │         └── Payments
-      └── Plans
+ ├── Branches
+ │    ├── Members
+ │    │    ├── Subscriptions
+ │    │    │    ├── Payments
+ │    │
+ │    └── Users (Staff)
+ │
+ ├── Plans
+ └── Audit Logs
+
 ```
 
 ---
