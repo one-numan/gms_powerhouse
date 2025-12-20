@@ -161,3 +161,108 @@ This POC is intentionally **minimal but correct**.
 
 > “We build the right foundation first, then add complexity only when needed.”
 
+
+
+
+
+
+---
+
+# Final Permission Matrix (RBAC)
+
+This document defines the **final, locked Role-Based Access Control (RBAC)** for the system.
+These permissions are agreed upon and should be treated as **authoritative for the POC**.
+
+---
+
+## Role Definitions
+
+| Role                     | Scope                        |
+| ------------------------ | ---------------------------- |
+| **SuperAdmin**           | Entire system                |
+| **Organization Manager** | Entire organization          |
+| **Branch Manager**       | One branch (read org-wide)   |
+| **Gym Staff**            | One branch (limited actions) |
+
+---
+
+## Organization & Branch Permissions
+
+| Action              | SuperAdmin | Org Manager | Branch Manager | Gym Staff |
+| ------------------- | ---------- | ----------- | -------------- | --------- |
+| Create Organization | ✅          | ❌           | ❌              | ❌         |
+| Update Organization | ✅          | ✅           | ❌              | ❌         |
+| Create Branch       | ✅          | ❌           | ❌              | ❌         |
+| Update Branch       | ✅          | ✅           | ❌              | ❌         |
+| Delete Branch       | ✅          | ❌           | ❌              | ❌         |
+| View All Branches   | ✅          | ✅           | ✅              | ❌         |
+
+---
+
+## User (Staff) Management
+
+| Action        | SuperAdmin | Org Manager | Branch Manager | Gym Staff |
+| ------------- | ---------- | ----------- | -------------- | --------- |
+| View Users    | ✅ (All)    | ✅ (Org)     | ✅ (Org)        | ✅ (Org)   |
+| Create User   | ✅          | ✅ (Org)     | ✅ (Branch)     | ❌         |
+| Update User   | ✅          | ✅ (Org)     | ❌              | ❌         |
+| Delete User   | ✅          | ✅ (Org)     | ❌              | ❌         |
+| Assign Branch | ✅          | ✅           | ❌              | ❌         |
+
+---
+
+## Members (Gym Clients)
+
+| Action        | SuperAdmin | Org Manager | Branch Manager | Gym Staff  |
+| ------------- | ---------- | ----------- | -------------- | ---------- |
+| View Members  | ✅          | ✅           | ✅              | ✅ (Branch) |
+| Add Member    | ✅          | ✅           | ✅              | ✅ (Branch) |
+| Update Member | ❌          | ❌           | ❌              | ❌          |
+| Shift Branch  | ❌          | ✅           | ✅              | ❌          |
+| Delete Member | ❌          | ❌           | ❌              | ❌          |
+
+**Decision Locked:**
+Members are **immutable after creation**. This is intentional and correct for the POC.
+
+---
+
+## Subscriptions
+
+| Action              | SuperAdmin | Org Manager | Branch Manager | Gym Staff  |
+| ------------------- | ---------- | ----------- | -------------- | ---------- |
+| View Subscriptions  | ✅          | ✅           | ✅              | ✅ (Branch) |
+| Create Subscription | ✅          | ✅           | ✅              | ❌          |
+| Update Subscription | ✅          | ✅           | ✅              | ❌          |
+| Delete Subscription | ❌          | ❌           | ❌              | ❌          |
+
+---
+
+## Payments
+
+| Action              | SuperAdmin | Org Manager | Branch Manager   | Gym Staff  |
+| ------------------- | ---------- | ----------- | ---------------- | ---------- |
+| View Payments       | ✅          | ✅           | ✅ (All branches) | ❌          |
+| Create Payment      | ❌          | ❌           | ✅                | ✅ (Branch) |
+| Update Payment      | ❌          | ❌           | ✅                | ❌          |
+| Soft Delete Payment | ❌          | ✅           | ❌                | ❌          |
+| Hard Delete Payment | ❌          | ❌           | ❌                | ❌          |
+
+---
+
+## Notes
+
+* No role is allowed to **hard delete payments**
+* Members cannot be updated or deleted after creation
+* Branch Managers have **read-only org visibility**
+* Gym Staff actions are **strictly branch-scoped**
+
+---
+
+If you want, I can next:
+
+* Map this to **API permission constants**
+* Generate **DB role policies**
+* Add **Mermaid RBAC diagrams** to the README
+* Create **authorization middleware logic**
+
+Just tell me.
