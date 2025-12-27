@@ -22,11 +22,17 @@ class AuditLog(models.Model):
     )
 
     # --- Context ---
+    # organization = models.ForeignKey(
+    #     'organizations.Organization',
+    #     on_delete=models.CASCADE,
+    #     related_name='audit_logs'
+    # )
     organization = models.ForeignKey(
         'organizations.Organization',
-        on_delete=models.CASCADE,
-        related_name='audit_logs'
-    )
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+)
 
     action = models.CharField(
         max_length=20,

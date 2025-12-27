@@ -62,6 +62,7 @@ CUSTOM_APPS = [
     'members',         # Gym members (clients)
     'organizations',   # Gym companies & branches
     'subscriptions',   # Plans, memberships & payments
+    'dashboard',       # Dashboard For Each Roles
 ]
 
 INSTALLED_APPS = [
@@ -90,7 +91,7 @@ ROOT_URLCONF = 'gms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # optional
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,3 +161,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User Models | Accounts Apps
 AUTH_USER_MODEL = 'accounts.User'
+
+
+# Authenticatoins
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'

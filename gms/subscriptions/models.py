@@ -53,7 +53,8 @@ class Subscription(models.Model):
     member = models.ForeignKey(
         'members.Member',
         on_delete=models.CASCADE,
-        related_name='subscriptions'
+        related_name='subscriptions',
+        db_index=True  
     )
 
     plan = models.ForeignKey(
@@ -61,13 +62,14 @@ class Subscription(models.Model):
         on_delete=models.PROTECT
     )
 
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateField(db_index=True )
+    end_date = models.DateField(db_index=True )
 
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default='active'
+        default='active',
+        db_index=True 
     )
 
     # --- Audit ---
@@ -93,6 +95,12 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f"{self.member} → {self.plan.name} ({self.status})"
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['member', 'status']),
+            models.Index(fields=['end_date']),
+        ]
 
 
 class Payment(models.Model):
@@ -125,7 +133,8 @@ class Payment(models.Model):
 
     payment_mode = models.CharField(
         max_length=20,
-        choices=PAYMENT_MODE_CHOICES
+        choices=PAYMENT_MODE_CHOICES,
+        db_index=True 
     )
 
     payment_ref = models.CharField(
@@ -134,16 +143,21 @@ class Payment(models.Model):
         null=True
     )
 
-    payment_date = models.DateField()
+    payment_date = models.DateField(db_index=True)
 
     received_by = models.ForeignKey(
         'accounts.User',
         on_delete=models.SET_NULL,
         null=True,
-        related_name='received_payments'
+        related_name='received_payments',
+        db_index=True  # ✅ RBAC checks
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.member} - {self.amount} ({self.payment_mode})"
+
+
+
+    

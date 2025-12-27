@@ -27,25 +27,28 @@ class User(AbstractUser):
     role = models.CharField(
         max_length=20,
         choices=ROLE_CHOICES,
-        default='staff'
+        default='staff',
+        db_index=True  # ✅ RBAC checks,
     )
 
     organization = models.ForeignKey(
         'organizations.Organization',
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        db_index=True  
     )
 
     branch = models.ForeignKey(
         'organizations.Branch',
         on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
+        db_index=True  # ✅ RBAC checks
     )
 
     # --- Contact & Location ---
-    mobile = models.CharField(max_length=20, blank=True, null=True)
+    mobile = models.CharField(max_length=20, blank=True, null=True,db_index=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     state = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
