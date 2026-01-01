@@ -14,13 +14,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# from django.contrib import admin
+# from django.urls import path,include
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     path('members/', include('members.urls')),
+#     path('accounts/', include('accounts.urls')),
+#     path('dashboard/', include('dashboard.urls')),
+
+# ]
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from dashboard.views import dashboard_router,fast_logout  # IMPORT IT
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('members/', include('members.urls')),
+    path('', dashboard_router, name='dashboard_router'),  # ✅ REQUIRED
     path('accounts/', include('accounts.urls')),
     path('dashboard/', include('dashboard.urls')),
-
+    path('admin/', admin.site.urls),
+    # ✅ LOGOUT AT ROOT
+    path('logout/', fast_logout, name='logout'),
 ]

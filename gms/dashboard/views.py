@@ -1,32 +1,33 @@
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.http import JsonResponse
+from accounts.decorators import role_required
+from django.shortcuts import render
+
 
 @login_required
 def dashboard_router(request):
-    """
-    Redirect users to role-based dashboards.
-    """
     user = request.user
-    print(user.role,user            )
+    
+    print(f"Requesting {request}")
     if user.is_superuser:
-        print("Super User")
-        return redirect('/admin/')
+        return redirect('admin:index')
 
-    if user.role == 'organization_manager':
+    role = getattr(user, 'role', None)
 
-        print("organization_manager")
-        return redirect('/dashboard/org/')
+    if role == 'organization_manager':
+        return redirect('dashboard:org')
 
-    if user.role == 'gym_manager':
-        print("gym_manager")
-        return redirect('/dashboard/branch/')
+    if role == 'gym_manager':
+        return redirect('dashboard:branch')
 
-    if user.role == 'gymown':
-        print("gymown")
-        return redirect('/dashboard/staff/')
+    if role == 'gymown':
+        return redirect('dashboard:staff')
 
-    return redirect('/accounts/login/')
+    # fallback (logged in but no role)
+    return redirect('accounts:login')
+
 
 
 @login_required
@@ -38,3 +39,35 @@ def dashboard_org(request):
         'city': 'Noida'
     }
     return JsonResponse(data)
+
+def user_data(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return {
+            'name': 'Guest',
+            'role': None,
+        }
+
+    return {
+        'name': user.get_full_name() or user.username,
+        'role': getattr(user, 'role', None),
+    }
+
+@role_required(['owner'])
+def owner_dashboard(request):
+    return render(request, 'dashboard/owner.html')
+
+def fast_logout(request):
+    logout(request)
+    return redirect('accounts:login')
+
+
+def blank_page(request):
+    return render(request, 'blank.html')
+
+
+@role_required(['owner','site_manager','gym_manager','staff'])
+def sample_page(request):
+    print(user_data(request=request))
+    return render(request, 'blank.html')
