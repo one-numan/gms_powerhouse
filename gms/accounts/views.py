@@ -13,6 +13,7 @@ def login_view(request):
     """
     Handles user authentication and role-based redirection.
     """
+    print("Login Done")
     if request.user.is_authenticated:
         return redirect('dashboard:router')
 

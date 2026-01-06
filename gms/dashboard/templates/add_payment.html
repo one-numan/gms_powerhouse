@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Add Payment{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+  <h1>Add Payment</h1>
+
+</div>
+
+<section class="section">
+  <div class="card">
+    <div class="card-body">
+        <br>
+        <p>{{ member.first_name }} {{ member.last_name }}</p>
+        <p>Mobile Number {{ member.mobile }}</p>
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+
+        <div class="col-md-12">
+          <label class="form-label">Plan</label>
+          {{ form.plan }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Amount</label>
+          {{ form.amount }}
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Payment Mode</label>
+          {{ form.payment_mode }}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Payment Date</label>
+            {{ form.payment_date }}
+          </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-success">
+            Save Payment & Activate Membership
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

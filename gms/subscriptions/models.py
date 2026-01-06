@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Q
+from django.utils import timezone
 
 
 class Plan(models.Model):
@@ -10,16 +12,17 @@ class Plan(models.Model):
     organization = models.ForeignKey(
         'organizations.Organization',
         on_delete=models.CASCADE,
-        related_name='plans'
+        related_name='plans',
+        db_index=True
     )
 
-    name = models.CharField(max_length=100)          # e.g. "3 Months"
-    duration_days = models.PositiveIntegerField()    # e.g. 90
+    name = models.CharField(max_length=100)
+    duration_days = models.PositiveIntegerField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
 
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True, db_index=True)
 
-    # --- Audit Fields ---
+    # --- Audit ---
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -34,7 +37,92 @@ class Plan(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} - {self.amount}"
+        return f"{self.name} ({self.amount})"
+
+
+# class Subscription(models.Model):
+#     """
+#     Subscription represents a member's membership.
+#     A member can have multiple subscriptions over time,
+#     but ONLY ONE active subscription at a time.
+#     """
+
+#     STATUS_CHOICES = (
+#         ('active', 'Active'),
+#         ('expired', 'Expired'),
+#         ('cancelled', 'Cancelled'),
+#     )
+
+#     organization = models.ForeignKey(
+#         'organizations.Organization',
+#         on_delete=models.CASCADE,
+#         related_name='subscriptions',
+#         db_index=True
+#     )
+
+#     member = models.ForeignKey(
+#         'members.Member',
+#         on_delete=models.CASCADE,
+#         related_name='subscriptions',
+#         db_index=True
+#     )
+
+#     plan = models.ForeignKey(
+#         Plan,
+#         on_delete=models.PROTECT,
+#         related_name='subscriptions'
+#     )
+
+#     start_date = models.DateField(db_index=True)
+#     end_date = models.DateField(db_index=True)
+
+#     status = models.CharField(
+#         max_length=20,
+#         choices=STATUS_CHOICES,
+#         default='active',
+#         db_index=True
+#     )
+
+#     # --- Audit ---
+#     created_by = models.ForeignKey(
+#         'accounts.User',
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         related_name='created_subscriptions'
+#     )
+
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     # --- Soft Delete ---
+#     deleted_at = models.DateTimeField(null=True, blank=True)
+#     deleted_by = models.ForeignKey(
+#         'accounts.User',
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         blank=True,
+#         related_name='deleted_subscriptions'
+#     )
+
+#     class Meta:
+#         indexes = [
+#             models.Index(fields=['member', 'status']),
+#             models.Index(fields=['end_date']),
+#         ]
+#         constraints = [
+#             models.UniqueConstraint(
+#                 fields=['member'],
+#                 condition=Q(status='active', deleted_at__isnull=True),
+#                 name='one_active_subscription_per_member'
+#             )
+#         ]
+
+#     def is_expired(self):
+#         return self.end_date < timezone.now().date()
+
+#     def __str__(self):
+#         return f"{self.member} → {self.plan.name} ({self.status})"
+
 
 
 class Subscription(models.Model):
@@ -50,26 +138,34 @@ class Subscription(models.Model):
         ('cancelled', 'Cancelled'),
     )
 
+    organization = models.ForeignKey(
+        'organizations.Organization',
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+        db_index=True
+    )
+
     member = models.ForeignKey(
         'members.Member',
         on_delete=models.CASCADE,
         related_name='subscriptions',
-        db_index=True  
+        db_index=True
     )
 
     plan = models.ForeignKey(
-        Plan,
-        on_delete=models.PROTECT
+        'subscriptions.Plan',
+        on_delete=models.PROTECT,
+        related_name='subscriptions'
     )
 
-    start_date = models.DateField(db_index=True )
-    end_date = models.DateField(db_index=True )
+    start_date = models.DateField(db_index=True)
+    end_date = models.DateField(db_index=True)
 
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
         default='active',
-        db_index=True 
+        db_index=True
     )
 
     # --- Audit ---
@@ -93,20 +189,29 @@ class Subscription(models.Model):
         related_name='deleted_subscriptions'
     )
 
-    def __str__(self):
-        return f"{self.member} → {self.plan.name} ({self.status})"
-    
     class Meta:
         indexes = [
             models.Index(fields=['member', 'status']),
             models.Index(fields=['end_date']),
         ]
+        constraints = [
+            models.UniqueConstraint(
+                fields=['member'],
+                condition=Q(status='active', deleted_at__isnull=True),
+                name='one_active_subscription_per_member'
+            )
+        ]
 
+    def is_expired(self):
+        return self.end_date < timezone.now().date()
+
+    def __str__(self):
+        return f"{self.member} → {self.plan.name} ({self.status})"
 
 class Payment(models.Model):
     """
     Payment stores money received for a subscription.
-    Payments are financial records and must NEVER be deleted.
+    Payments are immutable financial records.
     """
 
     PAYMENT_MODE_CHOICES = (
@@ -115,6 +220,13 @@ class Payment(models.Model):
         ('debit_card', 'Debit Card'),
         ('credit_card', 'Credit Card'),
         ('bank_transfer', 'Bank Transfer'),
+    )
+
+    organization = models.ForeignKey(
+        'organizations.Organization',
+        on_delete=models.CASCADE,
+        related_name='payments',
+        db_index=True
     )
 
     subscription = models.ForeignKey(
@@ -134,7 +246,7 @@ class Payment(models.Model):
     payment_mode = models.CharField(
         max_length=20,
         choices=PAYMENT_MODE_CHOICES,
-        db_index=True 
+        db_index=True
     )
 
     payment_ref = models.CharField(
@@ -150,14 +262,21 @@ class Payment(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         related_name='received_payments',
-        db_index=True  # ✅ RBAC checks
+        db_index=True
+    )
+
+    # --- Accounting Safety ---
+    is_void = models.BooleanField(default=False, db_index=True)
+    voided_at = models.DateTimeField(null=True, blank=True)
+    voided_by = models.ForeignKey(
+        'accounts.User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='voided_payments'
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.member} - {self.amount} ({self.payment_mode})"
-
-
-
-    

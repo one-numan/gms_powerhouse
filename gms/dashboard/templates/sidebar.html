@@ -25,23 +25,23 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="forms-elements.html">
-            <i class="bi bi-circle"></i><span>Form Elements</span>
+          <a href="{% url 'dashboard:add_member' %}">
+            <i class="bi bi-circle"></i><span>Add Member</span>
           </a>
         </li>
         <li>
-          <a href="forms-layouts.html">
-            <i class="bi bi-circle"></i><span>Form Layouts</span>
+          <a href="{% url 'dashboard:member_list' %}">
+            <i class="bi bi-circle"></i><span>All Members List</span>
           </a>
         </li>
         <li>
-          <a href="forms-editors.html">
-            <i class="bi bi-circle"></i><span>Form Editors</span>
+          <a href="#">
+            <i class="bi bi-circle"></i><span>Edit Member</span>
           </a>
         </li>
         <li>
-          <a href="forms-validation.html">
-            <i class="bi bi-circle"></i><span>Form Validation</span>
+          <a href="#">
+            <i class="bi bi-circle"></i><span>Remove Member</span>
           </a>
         </li>
       </ul>
@@ -64,14 +64,26 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="tables-general.html">
-            <i class="bi bi-circle"></i><span>General Tables</span>
+          <a href="{% url 'dashboard:all_payments' %}">
+            <i class="bi bi-circle"></i><span>View Payment</span>
           </a>
         </li>
         <li>
-          <a href="tables-data.html">
-            <i class="bi bi-circle"></i><span>Data Tables</span>
+          <a href="#">
+            <i class="bi bi-circle"></i><span>Add Payment</span>
           </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'dashboard:today_payments' %}">
+            <i class="bi bi-cash"></i>
+            <span>Today's Payments</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'dashboard:staff_today_payments' %}">Today Payments</a>
+        </li>
+        <li>
+          <a href="{% url 'dashboard:staff_expired_members' %}">Expired Members</a>
         </li>
       </ul>
     </li>
