@@ -1,5 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/onenuma1/public_html/
-    - /bin/cp * $DEPLOYPATH
+    - echo "🚀 Deploying Django project files"
+    - export DEPLOYPATH=/home4/onenuma1/gms_powerhouse
+    - mkdir -p $DEPLOYPATH
+    - rsync -av --delete ./ $DEPLOYPATH/
