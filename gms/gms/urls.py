@@ -25,9 +25,14 @@ Including another URLconf
 
 # ]
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from dashboard.views import dashboard_router,fast_logout  # IMPORT IT
 from django.contrib.auth.views import LogoutView
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns # new
+from django.conf import settings
+from django.views.static import serve
+
 
 urlpatterns = [
     path('', dashboard_router, name='dashboard_router'),  # ✅ REQUIRED
@@ -36,4 +41,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # ✅ LOGOUT AT ROOT
     path('logout/', fast_logout, name='logout'),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}), 
 ]

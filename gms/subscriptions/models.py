@@ -125,6 +125,95 @@ class Plan(models.Model):
 
 
 
+# class Subscription(models.Model):
+#     """
+#     Subscription represents a member's membership.
+#     A member can have multiple subscriptions over time,
+#     but ONLY ONE active subscription at a time.
+#     """
+
+#     STATUS_CHOICES = (
+#         ('active', 'Active'),
+#         ('expired', 'Expired'),
+#         ('cancelled', 'Cancelled'),
+#     )
+
+#     organization = models.ForeignKey(
+#         'organizations.Organization',
+#         on_delete=models.CASCADE,
+#         related_name='subscriptions',
+#         db_index=True
+#     )
+
+#     member = models.ForeignKey(
+#         'members.Member',
+#         on_delete=models.CASCADE,
+#         related_name='subscriptions',
+#         db_index=True
+#     )
+
+#     plan = models.ForeignKey(
+#         'subscriptions.Plan',
+#         on_delete=models.PROTECT,
+#         related_name='subscriptions'
+#     )
+
+#     start_date = models.DateField(db_index=True)
+#     end_date = models.DateField(db_index=True)
+
+#     status = models.CharField(
+#         max_length=20,
+#         choices=STATUS_CHOICES,
+#         default='active',
+#         db_index=True
+#     )
+
+#     # --- Audit ---
+#     created_by = models.ForeignKey(
+#         'accounts.User',
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         related_name='created_subscriptions'
+#     )
+
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     # --- Soft Delete ---
+#     deleted_at = models.DateTimeField(null=True, blank=True)
+#     deleted_by = models.ForeignKey(
+#         'accounts.User',
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         blank=True,
+#         related_name='deleted_subscriptions'
+#     )
+
+#     class Meta:
+#         indexes = [
+#             models.Index(fields=['member', 'status']),
+#             models.Index(fields=['end_date']),
+#         ]
+#         constraints = [
+#             models.UniqueConstraint(
+#                 fields=['member'],
+#                 condition=Q(status='active', deleted_at__isnull=True),
+#                 name='one_active_subscription_per_member'
+#             )
+#         ]
+
+#     def is_expired(self):
+#         return self.end_date < timezone.now().date()
+
+#     def __str__(self):
+#         return f"{self.member} → {self.plan.name} ({self.status})"
+
+from django.db import models
+from django.db import transaction
+from django.db.models import Q
+from django.utils import timezone
+
+
 class Subscription(models.Model):
     """
     Subscription represents a member's membership.
@@ -194,6 +283,8 @@ class Subscription(models.Model):
             models.Index(fields=['member', 'status']),
             models.Index(fields=['end_date']),
         ]
+        # ⚠️ MariaDB does NOT enforce conditional unique constraints
+        # This constraint is kept only for documentation / future DBs
         constraints = [
             models.UniqueConstraint(
                 fields=['member'],
@@ -201,6 +292,20 @@ class Subscription(models.Model):
                 name='one_active_subscription_per_member'
             )
         ]
+
+    # ✅ MARIA DB SAFE ENFORCEMENT
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            if self.status == 'active' and self.deleted_at is None:
+                Subscription.objects.filter(
+                    member=self.member,
+                    status='active',
+                    deleted_at__isnull=True
+                ).exclude(pk=self.pk).update(
+                    status='expired',
+                    updated_at=timezone.now()
+                )
+            super().save(*args, **kwargs)
 
     def is_expired(self):
         return self.end_date < timezone.now().date()

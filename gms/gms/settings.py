@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-djb^l89y5rjr49#!cf9tykm%0z$8iedz_c0!7xr7oz=l-sc9ei
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -176,3 +176,4 @@ LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'dashboard_router'
 LOGOUT_REDIRECT_URL = 'accounts:login'
 
+SILENCED_SYSTEM_CHECKS = ["models.W036"] # Maria DB Issues
