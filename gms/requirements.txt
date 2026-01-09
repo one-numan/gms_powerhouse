@@ -1,0 +1,6 @@
+Django>=4.2,<5.0
+djangorestframework>=3.14,<4.0
+PyMySQL>=1.1
+asgiref>=3.6
+sqlparse>=0.4
+mysql-connector-python==8.0.29
