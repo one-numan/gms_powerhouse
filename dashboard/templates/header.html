@@ -119,7 +119,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-chat-left-text"></i>
-          <span class="badge bg-success badge-number">3</span> </a
+          <span class="badge bg-success badge-number">*</span> </a
         ><!-- End Messages Icon -->
 
         <ul
@@ -214,11 +214,7 @@
           href="#"
           data-bs-toggle="dropdown"
         >
-          <img
-            src="{% static 'img/profile-img.jpg' %}"
-            alt="Profile"
-            class="rounded-circle"
-          />
+        <i class="bi bi-person-circle h4"></i>
           <span class="d-none d-md-block dropdown-toggle ps-2"
             >{{request.user.username | title | slice:":6" }}</span
           > </a
@@ -236,7 +232,7 @@
           <li>
             <a
               class="dropdown-item d-flex align-items-center"
-              href="#"
+              href="{% url 'dashboard:profile' %}"
             >
               <i class="bi bi-person"></i>
               <span>My Profile</span>

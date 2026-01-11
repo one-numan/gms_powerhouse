@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>FAQs</h1>
+</div>
+
+<section class="section">
+    <div class="container-fluid">
+
+        <!-- Language Toggle -->
+        <div class="d-flex justify-content-end mb-3">
+            <div class="btn-group" role="group">
+                <button class="btn btn-outline-primary btn-sm" onclick="showLang('en')">English</button>
+                <button class="btn btn-outline-primary btn-sm" onclick="showLang('hi')">हिंदी</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <!-- ================= ENGLISH FAQ ================= -->
+                <div id="faq-en">
+
+                    <h5 class="card-title">Frequently Asked Questions</h5>
+
+                    <div class="accordion" id="faqAccordionEn">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#en1">
+                                    Why are we using this gym software?
+                                </button>
+                            </h2>
+                            <div id="en1" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    This software helps manage memberships, payments, and expiry dates in one place,
+                                    reducing confusion and manual errors.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#en2">
+                                    What is the difference between Membership and Payment?
+                                </button>
+                            </h2>
+                            <div id="en2" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <strong>Membership</strong> is the plan (1 month, 3 months, etc).<br>
+                                    <strong>Payment</strong> is the money paid for that membership.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#en4">
+                                    Who can add members in the system?
+                                </button>
+                            </h2>
+                            <div id="en4" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    Gym Staff, Branch Manager, and Owner can add members.
+                                    Members themselves do not have login access.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#en5">
+                                    What happens when a membership expires?
+                                </button>
+                            </h2>
+                            <div id="en5" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    The member is marked as expired. They can rejoin anytime by making a new payment.
+                                    Old history is never deleted.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#en6">
+                                    Can payments be edited or deleted?
+                                </button>
+                            </h2>
+                            <div id="en6" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    Payments cannot be deleted. This ensures financial safety and audit accuracy.
+                                    Only authorized users can update limited fields.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#en7">
+                                    Can staff see data from other branches?
+                                </button>
+                            </h2>
+                            <div id="en7" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    No. Staff can only see and work on data from their assigned branch.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#en3">
+                                    Can a member have multiple memberships?
+                                </button>
+                            </h2>
+                            <div id="en3" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    A member can have many memberships over time, but only one active membership at a
+                                    time.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================= HINDI / HINGLISH FAQ ================= -->
+                <div id="faq-hi" style="display:none;">
+
+                    <h5 class="card-title">अक्सर पूछे जाने वाले सवाल</h5>
+
+                    <div class="accordion" id="faqAccordionHi">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#hi1">
+                                    Gym software ka use kyun ho raha hai?
+                                </button>
+                            </h2>
+                            <div id="hi1" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    Gym ka record sahi rakhne ke liye, payment aur membership confusion khatam karne ke
+                                    liye
+                                    aur kaam fast banane ke liye.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#hi4">
+                                    System mein member kaun add kar sakta hai?
+                                </button>
+                            </h2>
+                            <div id="hi4" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    Gym Staff, Branch Manager aur Owner member add kar sakte hain.
+                                    Member ko login access nahi hota.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#hi5">
+                                    Membership expire hone par kya hota hai?
+                                </button>
+                            </h2>
+                            <div id="hi5" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    Member expired ho jata hai. Jab chahe naya payment karke dubara join kar sakta hai.
+                                    Purana record delete nahi hota.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#hi6">
+                                    Kya payment delete ya edit ho sakta hai?
+                                </button>
+                            </h2>
+                            <div id="hi6" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    Payment kabhi delete nahi hota. Ye safety aur audit ke liye zaroori hai.
+                                    Sirf limited update allowed hota hai.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#hi7">
+                                    Kya staff dusre branch ka data dekh sakta hai?
+                                </button>
+                            </h2>
+                            <div id="hi7" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    Nahi. Staff sirf apne branch ka data hi dekh sakta hai.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#hi2">
+                                    Membership aur Payment mein kya difference hai?
+                                </button>
+                            </h2>
+                            <div id="hi2" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <strong>Membership</strong> matlab plan (1 month, 3 months).<br>
+                                    <strong>Payment</strong> matlab paisa jo aapne diya.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#hi3">
+                                    Kya ek member ki multiple membership ho sakti hai?
+                                </button>
+                            </h2>
+                            <div id="hi3" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    Haan, time ke saath ho sakti hai, lekin ek time pe sirf ek hi active membership hoti
+                                    hai.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Language Toggle Script -->
+<script>
+    function showLang(lang) {
+        document.getElementById('faq-en').style.display = (lang === 'en') ? 'block' : 'none';
+        document.getElementById('faq-hi').style.display = (lang === 'hi') ? 'block' : 'none';
+    }
+</script>
+
+{% endblock %}

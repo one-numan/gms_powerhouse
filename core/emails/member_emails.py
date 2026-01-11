@@ -31,7 +31,7 @@ def send_member_created_email(member):
     )
 
     email.attach_alternative(html_content, "text/html")
-    email.send(fail_silently=True)
+    email.send(fail_silently=False)
 
 def send_staff_member_added_notification(member, created_by):
     """
@@ -64,7 +64,7 @@ def send_staff_member_added_notification(member, created_by):
     )
 
     email.attach_alternative(html_content, "text/html")
-    email.send(fail_silently=True)
+    email.send(fail_silently=False)
 
 def send_staff_member_payment_notification():
     """
@@ -97,7 +97,7 @@ def send_staff_member_payment_notification():
     )
 
     email.attach_alternative(html_content, "text/html")
-    email.send(fail_silently=True)
+    email.send(fail_silently=False)
 
 
 def send_member_payment_notification():
@@ -131,6 +131,6 @@ def send_member_payment_notification():
     )
 
     email.attach_alternative(html_content, "text/html")
-    email.send(fail_silently=True)
+    email.send(fail_silently=False)
 
 

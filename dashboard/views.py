@@ -577,3 +577,21 @@ def staff_expired_members(request):
         'staff/expired_members.html',
         {'members': members}
     )
+
+
+@login_required
+def profile_page(request):
+    # Safely fetch the Member linked to the logged-in user
+    profile = get_object_or_404(Member, id=request.user.id)
+    return render(
+        request,
+        'profile.html',
+        {
+            'pro': profile,
+            'role':request.user.role
+        }
+    )
+
+@login_required
+def faq(request):
+    return render(request,'faq.html')

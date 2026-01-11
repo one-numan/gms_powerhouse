@@ -21,4 +21,9 @@ urlpatterns = [
     path('staff/today-payments/', views.staff_today_payments, name='staff_today_payments'),
     path('staff/expired-members/', views.staff_expired_members, name='staff_expired_members'),
 
+    # General View
+    path('profile',views.profile_page,name='profile'),
+
+    path('faq',views.faq,name='faq')
+
 ]
