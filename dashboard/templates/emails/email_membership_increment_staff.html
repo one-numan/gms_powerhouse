@@ -1,0 +1,102 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}New Member Payment Received{% endblock %}
+
+{% block content %}
+
+<h2 style="margin-top:0;">
+💰 New Member Payment Received
+</h2>
+
+<p>Hello Team,</p>
+
+<p>
+This is to inform you that a <strong>new gym member</strong> has been successfully added, and the membership payment has been received.
+Please find the member and payment details below.
+</p>
+
+<hr>
+
+<h3>👤 Member Information</h3>
+
+<table width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr>
+    <td><strong>Full Name:</strong></td>
+    <td>Rahul Sharma</td>
+  </tr>
+  <tr>
+    <td><strong>Mobile Number:</strong></td>
+    <td>+91 98765 43210</td>
+  </tr>
+  <tr>
+    <td><strong>Email Address:</strong></td>
+    <td>rahul.sharma@email.com</td>
+  </tr>
+  <tr>
+    <td><strong>Residential Address:</strong></td>
+    <td>
+      A-12, Sector 62,<br>
+      Noida, Uttar Pradesh – 201309
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<h3>📋 Membership Details</h3>
+
+<table width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr>
+    <td><strong>Plan Selected:</strong></td>
+    <td>6 Months Membership</td>
+  </tr>
+  <tr>
+    <td><strong>Membership Start Date:</strong></td>
+    <td>01 January 2026</td>
+  </tr>
+  <tr>
+    <td><strong>Membership End Date:</strong></td>
+    <td>30 June 2026</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3>💳 Payment Details</h3>
+
+<table width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr>
+    <td><strong>Amount Received:</strong></td>
+    <td>₹ 9,000</td>
+  </tr>
+  <tr>
+    <td><strong>Payment Mode:</strong></td>
+    <td>UPI</td>
+  </tr>
+  <tr>
+    <td><strong>Payment Date:</strong></td>
+    <td>01 January 2026</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3>📌 Action Required</h3>
+
+<ul>
+  <li>Please add the member to the daily attendance register.</li>
+  <li>Assign a trainer if required.</li>
+  <li>Schedule a basic fitness assessment.</li>
+</ul>
+
+<p>
+If you need any further details, please check the GMS dashboard.
+</p>
+
+<p>
+Regards,<br>
+<strong>Gym Management System</strong><br>
+Automated Notification
+</p>
+
+{% endblock %}

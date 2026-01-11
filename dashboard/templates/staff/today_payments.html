@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Today Payments{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+  <h1>Today’s Payments</h1>
+</div>
+
+<section class="section">
+  <div class="card">
+    <div class="card-body">
+
+      <h5 class="card-title">Payments Collected Today</h5>
+
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Member</th>
+            <th>Mobile</th>
+            <th>Amount</th>
+            <th>Payment Mode</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for payment in payments %}
+          <tr>
+            <td>{{ payment.member.first_name }} {{ payment.member.last_name }}</td>
+            <td>{{ payment.member.mobile }}</td>
+            <td>₹ {{ payment.amount }}</td>
+            <td>{{ payment.get_payment_mode_display }}</td>
+            <td>{{ payment.created_at|time:"H:i" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center text-muted">
+              No payments collected today.
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

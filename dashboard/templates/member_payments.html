@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Payments{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+  <h1>Payments</h1>
+  <p>
+    <strong>{{ member.first_name }} {{ member.last_name }}</strong> |
+    {{ member.mobile }}
+  </p>
+</div>
+
+<section class="section">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="d-flex justify-content-between mb-3">
+        <h5 class="card-title mb-0">Payment History</h5>
+        <a href="{% url 'dashboard:add_payment' member.id %}"
+           class="btn btn-success">
+          <i class="bi bi-plus-circle"></i> Add Payment
+        </a>
+      </div>
+
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Plan</th>
+            <th>Amount</th>
+            <th>Mode</th>
+            <th>Subscription Period</th>
+            <th>Received By</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for payment in payments %}
+          <tr>
+            <td>{{ payment.payment_date }}</td>
+            <td>{{ payment.subscription.plan.name }}</td>
+            <td>₹ {{ payment.amount }}</td>
+            <td>{{ payment.get_payment_mode_display }}</td>
+            <td>
+              {{ payment.subscription.start_date }}
+              →
+              {{ payment.subscription.end_date }}
+            </td>
+            <td>
+              {{ payment.received_by.get_full_name|default:payment.received_by.username }}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center text-muted">
+              No payments found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

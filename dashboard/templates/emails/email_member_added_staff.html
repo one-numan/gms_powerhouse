@@ -1,0 +1,85 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}New Member Added{% endblock %}
+
+{% block content %}
+
+<h2 style="margin-top:0;">
+🆕 New Member Registered
+</h2>
+
+<p>
+Hello Team,
+</p>
+
+<p>
+A new member has been successfully added to the system. Please review the details below and proceed with onboarding.
+</p>
+
+<hr>
+
+<h3>👤 Member Information</h3>
+
+<table width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr>
+    <td width="35%"><strong>Full Name</strong></td>
+    <td>Rahul Sharma</td>
+  </tr>
+  <tr>
+    <td><strong>Email Address</strong></td>
+    <td>rahul.sharma@email.com</td>
+  </tr>
+  <tr>
+    <td><strong>Mobile Number</strong></td>
+    <td>+91 98765 43210</td>
+  </tr>
+  <tr>
+    <td><strong>WhatsApp Number</strong></td>
+    <td>+91 98765 43210</td>
+  </tr>
+  <tr>
+    <td><strong>Gender</strong></td>
+    <td>Male</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3>🏋️ Gym / Branch Details</h3>
+
+<table width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+  <tr>
+    <td width="35%"><strong>Gym / Branch Name</strong></td>
+    <td>Powerhouse – Sector 62, Noida</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3>📍 Branch Address</h3>
+<p>
+THE POWER HOUSE GYM, RN 27, Rasoolpur Nawada,<br>
+Industrial Area, Sector 62, Noida,<br>
+Uttar Pradesh 201309
+</p>
+
+<hr>
+
+<p>
+<strong>Next Steps:</strong><br>
+• Assign trainer if required<br>
+• Complete fitness assessment & onboarding<br>
+• Add member to internal tracking or communication groups
+</p>
+
+<p>
+If any updates or corrections are needed, please take action accordingly.
+</p>
+
+<p>
+Regards,<br>
+<strong>Powerhouse System</strong><br>
+(Automated Notification)
+</p>
+
+{% endblock %}
