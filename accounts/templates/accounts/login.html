@@ -1,107 +1,167 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login | GMS</title>
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Basic -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            min-height: 100vh;
-        }
-        .login-card {
-            border-radius: 12px;
-        }
-    </style>
+    <!-- SEO -->
+    <title>Gym Management System | Onenuman Gym Portal</title>
+
+    <meta name="description"
+          content="Onenuman Gym Management System is a secure cloud-based gym ERP to manage members, subscriptions, trainers, attendance, billing, and reports.">
+
+    <meta name="keywords"
+          content="gym management system, gym software, gym ERP, fitness management system, gym membership software">
+
+    <meta name="author" content="Onenuman Technologies">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://gym.onenuman.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Gym Management System | Onenuman">
+    <meta property="og:description"
+          content="Complete Gym Management System to manage members, payments, trainers, and attendance.">
+    <meta property="og:url" content="https://gym.onenuman.com/">
+    <meta property="og:image" content="https://gym.onenuman.com/static/img/logo.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gym Management System | Onenuman">
+    <meta name="twitter:description"
+          content="Cloud-based Gym Management Software for fitness centers.">
+    <meta name="twitter:image" content="https://gym.onenuman.com/static/img/logo.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Onenuman Gym Management System",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Cloud-based gym management system for memberships, billing, trainers, and attendance.",
+      "url": "https://gym.onenuman.com",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Onenuman Technologies",
+        "url": "https://onenuman.com"
+      }
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Nunito:400,600,700|Poppins:400,500,600,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
 </head>
+<body>
 
-<body class="d-flex align-items-center justify-content-center">
+<!-- SEO Headings -->
+<h1 class="visually-hidden">Gym Management System Portal</h1>
+<h2 class="visually-hidden">Onenuman Gym ERP and Fitness Management Software</h2>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
+<main>
+    <div class="container">
+        <section class="min-vh-100 d-flex align-items-center justify-content-center">
+            <div class="col-lg-4 col-md-6">
 
-            <div class="card login-card shadow-lg p-4">
+                <!-- Logo -->
                 <div class="text-center mb-4">
-                    <h3 class="fw-bold">GMS Login</h3>
-                    <p class="text-muted">Sign in to your account</p>
+                    <img src="{% static 'img/image.png' %}" alt="Gym Management System" height="80">
+                    <br>
+                    <span class="card-title ">Gym Management System</span>
                 </div>
 
-                <!-- ERROR MESSAGE -->
-                {% if form.errors %}
-                    <div class="alert alert-danger text-center">
-                        {% for error in form.non_field_errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                <div class="card shadow-sm">
+                    <div class="card-body">
 
-                <form method="post">
-                    {% csrf_token %}
+                        <h5 class="card-title text-center mb-3">
+                            Login your account
+                        </h5>
 
-                    <!-- Username -->
-                    <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        <input type="text"
-                               name="username"
-                               class="form-control"
-                               placeholder="Enter username"
-                               required>
-                    </div>
+                        <!-- Django Messages -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
 
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
+                        <!-- Login Form -->
+                        <form method="post" novalidate>
+                            {% csrf_token %}
 
-                        <div class="input-group">
-                            <input type="password"
-                                   id="password"
-                                   name="password"
-                                   class="form-control"
-                                   placeholder="Enter password"
-                                   minlength="4"
-                                   required>
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input type="text"
+                                       name="username"
+                                       class="form-control"
+                                       placeholder="Enter username"
+                                       required>
+                            </div>
 
-                            <button type="button"
-                                    class="btn btn-outline-secondary"
-                                    onclick="togglePassword()">
-                                👁
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password"
+                                           name="password"
+                                           id="password"
+                                           class="form-control"
+                                           placeholder="Enter password"
+                                           required>
+                                    <button class="btn btn-outline-secondary"
+                                            type="button"
+                                            onclick="togglePassword()">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <small id="passwordHelp" class="text-danger d-none">
+                                    Password must be at least 4 characters
+                                </small>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" name="remember">
+                                <label class="form-check-label">Remember me</label>
+                            </div>
+
+                            <button type="submit"
+                                    id="loginBtn"
+                                    class="btn btn-primary w-100"
+                                    disabled>
+                                Login
                             </button>
-                        </div>
+                        </form>
 
-                        <small id="passwordHelp" class="text-danger d-none">
-                            Password must be at least 4 characters
-                        </small>
                     </div>
-
-                    <!-- Submit -->
-                    <div class="d-grid">
-                        <button type="submit"
-                                id="loginBtn"
-                                class="btn btn-primary"
-                                disabled>
-                            Login
-                        </button>
-                    </div>
-                </form>
-
-                <div class="text-center mt-3">
-                    <small class="text-muted">
-                        © {{ now|date:"Y" }} Gym Management System
-                    </small>
                 </div>
+
+                <p class="text-center small mt-3 text-muted">
+                    © 2026 Onenuman
+                </p>
 
             </div>
-
-        </div>
+        </section>
     </div>
-</div>
+</main>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JS -->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
 <!-- Inline JS -->
 <script>

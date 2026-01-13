@@ -119,6 +119,7 @@ def add_member(request):
             member.organization = request.user.organization
             member.branch = request.user.branch
             member.save()
+
             send_member_created_email(member) 
             send_staff_member_added_notification(member=member,created_by=request.user)
 

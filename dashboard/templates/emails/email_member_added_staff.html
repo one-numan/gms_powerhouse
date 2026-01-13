@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h2 style="margin-top:0;">
+<h2>
 🆕 New Member Registered
 </h2>
 
@@ -18,68 +18,63 @@ A new member has been successfully added to the system. Please review the detail
 
 <hr>
 
-<h3>👤 Member Information</h3>
+<h3>Member Information</h3>
 
-<table width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+<table width="100%" cellpadding="6" cellspacing="0">
   <tr>
-    <td width="35%"><strong>Full Name</strong></td>
-    <td>Rahul Sharma</td>
+    <td><strong>Full Name</strong></td>
+    <td>{{ member.first_name }} {{ member.last_name }}</td>
   </tr>
   <tr>
     <td><strong>Email Address</strong></td>
-    <td>rahul.sharma@email.com</td>
+    <td>{{ member.email }}</td>
   </tr>
   <tr>
     <td><strong>Mobile Number</strong></td>
-    <td>+91 98765 43210</td>
+    <td>{{ member.mobile }}</td>
   </tr>
   <tr>
     <td><strong>WhatsApp Number</strong></td>
-    <td>+91 98765 43210</td>
+    <td>{{ member.mobile }}</td>
   </tr>
   <tr>
     <td><strong>Gender</strong></td>
-    <td>Male</td>
+    <td>{{ member.get_gender_display }}</td>
   </tr>
 </table>
 
 <hr>
 
-<h3>🏋️ Gym / Branch Details</h3>
+<h3>Gym / Branch Details</h3>
 
-<table width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+<table width="100%" cellpadding="6" cellspacing="0">
   <tr>
-    <td width="35%"><strong>Gym / Branch Name</strong></td>
-    <td>Powerhouse – Sector 62, Noida</td>
+    <td><strong>Gym / Branch Name</strong></td>
+    <td>{{ member.branch.name }}</td>
   </tr>
 </table>
 
 <hr>
 
-<h3>📍 Branch Address</h3>
+<h3>Branch Address</h3>
+
 <p>
-THE POWER HOUSE GYM, RN 27, Rasoolpur Nawada,<br>
-Industrial Area, Sector 62, Noida,<br>
-Uttar Pradesh 201309
+{{ member.branch.address_line }}<br>
+{{ member.branch.area }}<br>
+{{ member.branch.city }}<br>
+{{ member.branch.state }}<br>
+{{ member.branch.pincode }}
 </p>
 
 <hr>
 
 <p>
-<strong>Next Steps:</strong><br>
-• Assign trainer if required<br>
-• Complete fitness assessment & onboarding<br>
-• Add member to internal tracking or communication groups
-</p>
-
-<p>
-If any updates or corrections are needed, please take action accordingly.
+Added By: {{ staff_name }}
 </p>
 
 <p>
 Regards,<br>
-<strong>Powerhouse System</strong><br>
-(Automated Notification)
+Powerhouse System
 </p>
 
 {% endblock %}

@@ -5,18 +5,18 @@
 {% block content %}
 
 <h2 style="margin-top:0;">
-Welcome to Powerhouse 🎉
+Welcome to {{ gym_name }} 🎉
 </h2>
 
-<p>Dear Member,</p>
+<p>Dear {{ member_name }},</p>
 
 <p>
-Welcome to <strong>Powerhouse</strong>!
+Welcome to <strong>{{ gym_name }}</strong>!
 We’re excited to have you as part of our fitness family and truly appreciate your decision to start your fitness journey with us.
 </p>
 
 <p>
-At <strong>Powerhouse</strong>, our goal is to help you stay motivated, train safely, and achieve real results—whether your focus is strength, weight loss, endurance, or overall wellness.
+At <strong>{{ gym_name  }}</strong>, our goal is to help you stay motivated, train safely, and achieve real results—whether your focus is strength, weight loss, endurance, or overall wellness.
 </p>
 
 <hr>
@@ -30,72 +30,14 @@ At <strong>Powerhouse</strong>, our goal is to help you stay motivated, train sa
 
 <hr>
 
-<h3>👤 Gym Trainer Contact</h3>
-<p><strong>Trainer Name:</strong> John Smith</p>
-
-<!-- WhatsApp Button -->
-<table cellpadding="0" cellspacing="0" role="presentation">
-  <tr>
-    <td style="background:#ffc107;border-radius:6px;">
-      <a href="https://wa.me/911234567890"
-         style="
-           display:inline-block;
-           padding:10px 16px;
-           font-weight:bold;
-           color:#000000;
-           text-decoration:none;
-           font-size:14px;
-         ">
-        💬 Chat with Trainer on WhatsApp
-      </a>
-    </td>
-  </tr>
-</table>
-
-<p>
-<strong>Phone:</strong> +91 12345 67890<br>
-<strong>Email:</strong> trainer@powerhousegym.com
-</p>
-
-<hr>
-
-<h3>🏋️‍♂️ Personal Training Support</h3>
-<p>
-For personalized workout plans, goal-based training, and one-on-one guidance:
-</p>
-
-<table cellpadding="0" cellspacing="0" role="presentation">
-  <tr>
-    <td style="background:#ffc107;border-radius:6px;">
-      <a href="https://wa.me/919876543210"
-         style="
-           display:inline-block;
-           padding:10px 16px;
-           font-weight:bold;
-           color:#000000;
-           text-decoration:none;
-           font-size:14px;
-         ">
-        💪 Chat with Personal Trainer
-      </a>
-    </td>
-  </tr>
-</table>
-
-<p>
-<strong>Phone:</strong> +91 98765 43210<br>
-<strong>Email:</strong> pt@powerhousegym.com
-</p>
-
-<hr>
 
 <h3>👤 Gym Owner / Management Contact</h3>
 
 <table cellpadding="0" cellspacing="0" role="presentation">
   <tr>
     <td style="background:#ffc107;border-radius:6px;">
-      <a href="https://wa.me/919999888877"
-         style="
+      <a href="https://wa.me/918808191829?text=Hi%20I%20am%20joining%20your%20gym%20and%20I%20have%20a%20query      "
+        style="
            display:inline-block;
            padding:10px 16px;
            font-weight:bold;
@@ -110,7 +52,7 @@ For personalized workout plans, goal-based training, and one-on-one guidance:
 </table>
 
 <p>
-<strong>Phone:</strong> +91 99998 88877<br>
+<strong>Phone:</strong> +91 8808191829 <br>
 <strong>Email:</strong> owner@powerhousegym.com
 </p>
 
@@ -155,15 +97,15 @@ We’re here to support you every step of the way. Stay consistent, stay positiv
 </p>
 
 <p>
-Welcome once again to <strong>Powerhouse</strong> 💪<br>
+Welcome once again to <strong>{{ member.organization.name }}</strong> 💪<br>
 We look forward to seeing you train.
 </p>
 
 <p>
 Warm regards,<br>
-<strong>Powerhouse Team</strong><br>
+<strong>{{ member.organization.name }} Team</strong><br>
 Management<br>
-<strong>Powerhouse</strong>
+<strong>{{ member.organization.name }}</strong>
 </p>
 
 {% endblock %}

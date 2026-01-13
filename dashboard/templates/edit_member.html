@@ -1,66 +1,158 @@
 {% extends "base.html" %}
-
 {% block title %}Edit Member{% endblock %}
 
 {% block content %}
-<div class="pagetitle">
-  <h1>Edit Member</h1>
+
+<div class="pagetitle mb-3">
+  <h1 class="fs-5">Edit Member</h1>
 </div>
 
 <section class="section">
   <div class="card">
+
+    <div class="card-header bg-dark text-white mb-2">
+      Edit Member
+    </div>
+
     <div class="card-body">
 
-      <!-- Read-only identity information -->
-      <div class="mb-4">
-        <p>
-          <strong>Name:</strong>
-          {{ member.first_name }} {{ member.last_name }}
-        </p>
-        <p>
-          <strong>Mobile:</strong>
-          {{ member.mobile }}
-        </p>
-        <p>
-          <strong>Branch:</strong>
-          {{ member.branch.name }}
-        </p>
-      </div>
-
-      <!-- Editable form -->
-      <form method="post" class="row g-3">
+      <form id="memberForm" method="post" class="row g-3">
         {% csrf_token %}
 
-        <div class="col-md-6">
-          <label class="form-label">Email</label>
-          {{ form.email }}
-          {% if form.email.errors %}
-            <div class="text-danger small">
-              {{ form.email.errors }}
-            </div>
-          {% endif %}
+        <!-- ======================
+             BASIC INFO (READ ONLY)
+             ====================== -->
+        <div class="col-12">
+          <h6 class="text-muted mb-2">Basic Information</h6>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-control" value="{{ member.first_name }}" disabled>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-control" value="{{ member.last_name }}" disabled>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Mobile Number</label>
+          <input type="text" class="form-control" value="{{ member.mobile }}" disabled>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Branch</label>
+          <input type="text" class="form-control" value="{{ member.branch.name }}" disabled>
+        </div>
+
+        <!-- ======================
+             EDITABLE INFO
+             ====================== -->
+        <div class="col-12 col-md-6">
+          <label class="form-label">Gender</label>
+          {{ form.gender }}
         </div>
 
         <div class="col-12">
-          <div class="form-check mt-3">
+          <label class="form-label">Email (optional)</label>
+          {{ form.email }}
+        </div>
+
+        <!-- ======================
+             ADDRESS
+             ====================== -->
+        <div class="col-12 mt-3">
+          <h6 class="text-muted mb-2">Address</h6>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Address</label>
+          {{ form.address_line }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Area</label>
+          {{ form.area }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">City</label>
+          {{ form.city }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">State</label>
+          {{ form.state }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Pincode</label>
+          {{ form.pincode }}
+        </div>
+
+        <!-- ======================
+             STATUS
+             ====================== -->
+        <div class="col-12 mt-2">
+          <div class="form-check">
             {{ form.is_active }}
-            <label class="form-check-label">
-              Active Member
-            </label>
+            <label class="form-check-label">Active</label>
           </div>
         </div>
 
-        <div class="text-center mt-4">
-          <button type="submit" class="btn btn-primary">
-            Update Member
-          </button>
-          <a href="{% url 'dashboard:member_list' %}" class="btn btn-secondary">
-            Cancel
-          </a>
+        <!-- ======================
+             ERRORS
+             ====================== -->
+        {% if form.errors %}
+        <div class="col-12">
+          <div class="alert alert-danger mt-2">
+            Please fix the highlighted errors.
+          </div>
         </div>
+        {% endif %}
+
+        <!-- ======================
+             ACTION BUTTONS
+             ====================== -->
+        <div class="col-12 mt-4">
+          <div class="d-grid gap-2">
+            <button type="submit" id="saveBtn" class="btn btn-primary w-100">
+              Update Member
+            </button>
+
+            <a href="{% url 'dashboard:member_list' %}" class="btn btn-outline-secondary">
+              Cancel
+            </a>
+          </div>
+        </div>
+
       </form>
 
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("memberForm");
+  const saveBtn = document.getElementById("saveBtn");
+  let locked = false;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (locked) return;
+    locked = true;
+
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = `
+      <span class="spinner-border spinner-border-sm me-2"></span>
+      Updating...
+    `;
+
+    setTimeout(() => form.submit(), 50);
+  });
+});
+</script>
+
 {% endblock %}

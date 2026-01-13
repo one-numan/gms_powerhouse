@@ -1,56 +1,200 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+
+  <!-- =====================================================
+       BASIC META TAGS
+       ===================================================== -->
+
+  <!-- Character encoding -->
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>{% block title %}GMS{% endblock %}</title>
+  <!-- Responsive layout for mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Nunito|Poppins" rel="stylesheet">
+  <!-- =====================================================
+       SEO : TITLE & META DESCRIPTION
+       ===================================================== -->
 
-  <!-- Vendor CSS -->
+  <!-- Page title (can be overridden in child templates) -->
+  <title>{% block title %}Gym Management System | GMS{% endblock %}</title>
+
+  <!-- SEO description (important for Google ranking) -->
+  <meta name="description"
+        content="{% block meta_description %}
+        Cloud-based Gym Management System to manage members, trainers, attendance, subscriptions, and payments.
+        {% endblock %}">
+
+  <!-- SEO basics -->
+  <meta name="keywords"
+        content="gym management system, gym software, gym ERP, fitness management system">
+  <meta name="author" content="Onenuman Technologies">
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL (avoids duplicate content issues) -->
+  <link rel="canonical" href="https://gym.onenuman.com/">
+
+
+  <!-- =====================================================
+       SOCIAL MEDIA SEO (OPEN GRAPH / TWITTER)
+       ===================================================== -->
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gym Management System | Onenuman">
+  <meta property="og:description"
+        content="Modern Gym Management Software for fitness centers.">
+  <meta property="og:url" content="https://gym.onenuman.com/">
+  <meta property="og:image" content="{% static 'img/logo.png' %}">
+
+  <meta name="twitter:card" content="summary_large_image">
+
+
+  <!-- =====================================================
+       FAVICON & PWA SUPPORT
+       ===================================================== -->
+
+  <!-- Browser favicon -->
+  <link rel="icon" href="{% static 'img/favicon.ico' %}">
+
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon-latest.png' %}">
+
+  <!-- Web App Manifest (for PWA / Add to Home Screen) -->
+  <link rel="manifest" href="{% static 'site.webmanifest' %}">
+  <meta name="theme-color" content="#0d6efd">
+
+
+  <!-- =====================================================
+       GOOGLE FONTS (OPTIMIZED)
+       ===================================================== -->
+
+  <!-- Preconnect improves font loading speed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts used across the application -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Nunito&family=Poppins&display=swap"
+        rel="stylesheet">
+
+
+  <!-- =====================================================
+       CORE CSS (ALWAYS REQUIRED)
+       ===================================================== -->
+
+  <!-- Bootstrap: layout, grid system, forms, buttons -->
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Bootstrap Icons: icons used in buttons, sidebar, header -->
   <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
+  <!-- Main custom CSS for Gym Management System -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+  <!-- =====================================================
+       EXTRA CSS (PAGE-SPECIFIC)
+       ===================================================== -->
+  {% block extra_css %}
+  <!-- Child templates can add page-specific CSS here -->
+  {% endblock %}
+
+
+  <!-- =====================================================
+       OPTIONAL / UNUSED CSS (COMMENTED)
+       Enable ONLY when needed
+       ===================================================== -->
+
+  <!-- Icon libraries (use only if icons are used in UI) -->
+  <!--
   <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  -->
+
+  <!-- Rich text editor styles (used in CMS / notices) -->
+  <!--
   <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
-  <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  -->
+
+  <!-- Data tables styling (members, payments, attendance lists) -->
+  <!--
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+  -->
 
-  <!-- Main CSS -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
-
 <body>
 
+  <!-- =====================================================
+       HEADER (TOP NAVIGATION BAR)
+       ===================================================== -->
   {% include "header.html" %}
+
+
+  <!-- =====================================================
+       SIDEBAR (LEFT MENU)
+       ===================================================== -->
   {% include "sidebar.html" %}
 
+
+  <!-- =====================================================
+       MAIN CONTENT AREA
+       ===================================================== -->
   <main id="main" class="main">
-      {% block content %}{% endblock %}
+      {% block content %}
+      <!-- Page-specific content will appear here -->
+      {% endblock %}
   </main>
 
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
   {% include "footer.html" %}
 
-  <!-- Vendor JS -->
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- =====================================================
+       CORE JAVASCRIPT (ALWAYS REQUIRED)
+       ===================================================== -->
+
+  <!-- Bootstrap JS: dropdowns, modals, tooltips -->
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}" defer></script>
+
+  <!-- Main JS: sidebar toggle, UI interactions -->
+  <script src="{% static 'js/main.js' %}" defer></script>
+
+
+  <!-- =====================================================
+       EXTRA JAVASCRIPT (PAGE-SPECIFIC)
+       ===================================================== -->
+  {% block extra_js %}
+  <!-- Child templates can add page-specific JS here -->
+  {% endblock %}
+
+
+  <!-- =====================================================
+       OPTIONAL / UNUSED JAVASCRIPT (COMMENTED)
+       Enable ONLY when needed
+       ===================================================== -->
+
+  <!-- Charts for dashboard analytics -->
+  <!--
   <script src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
   <script src="{% static 'vendor/echarts/echarts.min.js' %}"></script>
-  <script src="{% static 'vendor/quill/quill.min.js' %}"></script>
-  <script src="{% static 'vendor/simple-datatables/simple-datatables.js' %}"></script>
-  <script src="{% static 'vendor/tinymce/tinymce.min.js' %}"></script>
+  -->
 
-  <!-- Main JS -->
-  <script src="{% static 'js/main.js' %}"></script>
+  <!-- Rich text editors -->
+  <!--
+  <script src="{% static 'vendor/quill/quill.min.js' %}"></script>
+  <script src="{% static 'vendor/tinymce/tinymce.min.js' %}"></script>
+  -->
+
+  <!-- Tables (sorting, pagination) -->
+  <!--
+  <script src="{% static 'vendor/simple-datatables/simple-datatables.js' %}"></script>
+  -->
 
 </body>
 </html>

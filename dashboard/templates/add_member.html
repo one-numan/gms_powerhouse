@@ -1,62 +1,162 @@
 {% extends "base.html" %}
-
-{% block title %}Blank Page{% endblock %}
+{% block title %}Add New Member{% endblock %}
 
 {% block content %}
-<div class="pagetitle">
-  <h1>Add New Member</h1>
+
+<div class="pagetitle mb-3">
+  <h1 class="fs-5">Add New Member</h1>
 </div>
 
 <section class="section">
   <div class="card">
+    <div class="card-header bg-dark text-white mb-2">
+      Add New Member
+    </div>
     <div class="card-body">
-      <h5 class="card-title">Add Member</h5>
 
-      <form method="post" class="row g-3">
+      <form id="memberForm" method="post" class="row g-3">
+
         {% csrf_token %}
 
-        <div class="col-md-6">
-          <div class="form-floating">
-            {{ form.first_name }}
-            <label>First Name</label>
-          </div>
+        <!-- ======================
+             BASIC INFO (MOST USED)
+             ====================== -->
+        <div class="col-12">
+          <h6 class="text-muted mb-2">Basic Information</h6>
         </div>
 
-        <div class="col-md-6">
-          <div class="form-floating">
-            {{ form.last_name }}
-            <label>Last Name</label>
-          </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label">First Name *</label>
+          {{ form.first_name }}
         </div>
 
-        <div class="col-md-6">
-          <div class="form-floating">
-            {{ form.mobile }}
-            <label>Mobile</label>
-          </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label">Last Name</label>
+          {{ form.last_name }}
         </div>
 
-        <div class="col-md-6">
-          <div class="form-floating">
-            {{ form.email }}
-            <label>Email</label>
-          </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label">Mobile Number *</label>
+          {{ form.mobile }}
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Gender</label>
+          {{ form.gender }}
         </div>
 
         <div class="col-12">
-          <div class="form-check mt-2">
+          <label class="form-label">Email (optional)</label>
+          {{ form.email }}
+        </div>
+
+        <!-- ======================
+             ADDRESS (OPTIONAL)
+             ====================== -->
+        <div class="col-12 mt-3">
+          <h6 class="text-muted mb-2">Address</h6>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Address</label>
+          {{ form.address_line }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Area</label>
+          {{ form.area }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">City</label>
+          {{ form.city }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">State</label>
+          {{ form.state }}
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label class="form-label">Pincode</label>
+          {{ form.pincode }}
+        </div>
+
+        <!-- ======================
+             STATUS
+             ====================== -->
+        <div class="col-12 mt-2">
+          <div class="form-check">
             {{ form.is_active }}
             <label class="form-check-label">Active</label>
           </div>
         </div>
 
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="reset" class="btn btn-secondary">Reset</button>
+        <!-- ======================
+             ERRORS
+             ====================== -->
+        {% if form.errors %}
+        <div class="col-12">
+          <div class="alert alert-danger mt-2">
+            Please fix the highlighted errors.
+          </div>
         </div>
+        {% endif %}
+
+        <!-- ======================
+             ACTION BUTTONS (MOBILE FIRST)
+             ====================== -->
+        <div class="col-12 mt-4">
+          <div class="d-grid gap-2">
+            <!-- <button type="submit" class="btn btn-primary btn-lg">
+              Save Member
+            </button> -->
+            <button type="submit" id="saveBtn" class="btn btn-primary w-100">
+              Save Member
+          </button>
+          
+
+
+            <a href="{% url 'dashboard:member_list' %}" class="btn btn-outline-secondary">
+              Cancel
+            </a>
+          </div>
+        </div>
+
       </form>
 
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  
+      const form = document.getElementById("memberForm");
+      const saveBtn = document.getElementById("saveBtn");
+  
+      let locked = false;
+  
+      form.addEventListener("submit", function (e) {
+          e.preventDefault();
+  
+          if (locked) return;
+          locked = true;
+  
+          saveBtn.disabled = true;
+          saveBtn.innerHTML = `
+              <span class="spinner-border spinner-border-sm me-2"
+                    role="status" aria-hidden="true"></span>
+              Saving...
+          `;
+  
+          // allow browser to paint spinner
+          setTimeout(() => {
+              form.submit();
+          }, 50);
+      });
+  
+  });
+  </script>
+  
 {% endblock %}

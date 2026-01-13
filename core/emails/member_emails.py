@@ -10,7 +10,7 @@ def send_member_created_email(member):
 
     subject = f"Welcome to {member.organization.name}"
     to_email = [member.email]
-
+    print(member.first_name)
     context = {
         "gym_name": member.organization.name,
         "member_name": member.first_name,
@@ -45,10 +45,8 @@ def send_staff_member_added_notification(member, created_by):
 
     to_email = ['numantesting@gmail.com']
     context = {
-        # "gym_name": member.organization.name,
-        # "member_name": member.first_name,
-        # "branch_name": member.branch.name,
-        # "staff_name": created_by.get_full_name(),
+        "member": member,
+        "staff_name": created_by.username,
     }
 
     html_content = render_to_string(
