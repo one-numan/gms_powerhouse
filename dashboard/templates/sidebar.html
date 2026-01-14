@@ -10,7 +10,6 @@
         <span>Dashboard</span>
       </a>
     </li>
-    <!-- End Dashboard Nav -->
 
     <!-- Members -->
     <li class="nav-item">
@@ -37,27 +36,58 @@
         <li>
           <a href="{% url 'dashboard:member_list' %}">
             <i class="bi bi-circle"></i>
-            <span>All Members List</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="javascript:void(0)">
-            <i class="bi bi-circle"></i>
-            <span>Edit Member</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="javascript:void(0)">
-            <i class="bi bi-circle"></i>
-            <span>Remove Member</span>
+            <span>Members List</span>
           </a>
         </li>
 
       </ul>
     </li>
-    <!-- End Members Nav -->
+
+    <!-- Expiry -->
+    <li class="nav-item">
+      <a class="nav-link {% if active_page == 'expiry' %}active{% else %}collapsed{% endif %}"
+         data-bs-target="#expiry-nav"
+         data-bs-toggle="collapse"
+         href="#">
+        <i class="bi bi-hourglass-split"></i>
+        <span>Expiry</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+
+      <ul id="expiry-nav"
+          class="nav-content collapse {% if active_page == 'expiry' %}show{% endif %}"
+          data-bs-parent="#sidebar-nav">
+
+        <li>
+          <a href="{% url 'dashboard:subscriptions_expire_today' %}">
+            <i class="bi bi-circle"></i>
+            <span>Expiring Today</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'dashboard:subscriptions_expire_tomorrow' %}">
+            <i class="bi bi-circle"></i>
+            <span>Expired Tommorow</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'dashboard:subscriptions_expired_last_7_days' %}">
+            <i class="bi bi-circle"></i>
+            <span>last_7_days Members</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'dashboard:subscriptions_all' %}">
+            <i class="bi bi-circle"></i>
+            <span>All Expired</span>
+          </a>
+        </li>
+
+      </ul>
+    </li>
 
     <!-- Payments -->
     <li class="nav-item">
@@ -75,48 +105,39 @@
           data-bs-parent="#sidebar-nav">
 
         <li>
-          <a href="{% url 'dashboard:all_payments' %}">
+          <a href="{% url 'dashboard:payments_today' %}">
             <i class="bi bi-circle"></i>
-            <span>View Payments</span>
+            <span>Today Payments</span>
           </a>
         </li>
 
         <li>
-          <a href="javascript:void(0)">
+          <a href="{% url 'dashboard:payments_last_7_days' %}">
             <i class="bi bi-circle"></i>
-            <span>Add Payment</span>
+            <span>Last 7 Days</span>
           </a>
         </li>
 
         <li>
-          <a href="{% url 'dashboard:today_payments' %}">
+          <a href="{% url 'dashboard:payments_this_month' %}">
             <i class="bi bi-circle"></i>
-            <span>Today's Payments</span>
+            <span>This Month</span>
           </a>
         </li>
 
         <li>
-          <a href="{% url 'dashboard:staff_today_payments' %}">
+          <a href="{% url 'dashboard:payments_all' %}">
             <i class="bi bi-circle"></i>
-            <span>Staff Today Payments</span>
-          </a>
-        </li>
-
-        <li>
-          <a href="{% url 'dashboard:staff_expired_members' %}">
-            <i class="bi bi-circle"></i>
-            <span>Expired Members</span>
+            <span>All Payments</span>
           </a>
         </li>
 
       </ul>
     </li>
-    <!-- End Payments Nav -->
 
-    <!-- Pages Heading -->
-    <li class="nav-heading">Pages</li>
+    <!-- Account -->
+    <li class="nav-heading">Account</li>
 
-    <!-- Profile -->
     <li class="nav-item">
       <a class="nav-link {% if active_page == 'profile' %}active{% else %}collapsed{% endif %}"
          href="{% url 'dashboard:profile' %}">
@@ -125,35 +146,24 @@
       </a>
     </li>
 
-    <!-- FAQ -->
     <li class="nav-item">
       <a class="nav-link collapsed" href="{% url 'dashboard:faq' %}">
         <i class="bi bi-question-circle"></i>
-        <span>F.A.Q</span>
+        <span>Help / FAQ</span>
       </a>
     </li>
 
-    <!-- Feedback -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-contact.html">
+      <a class="nav-link collapsed" href="#">
         <i class="bi bi-envelope"></i>
-        <span>Feedbacks</span>
+        <span>Feedback</span>
       </a>
     </li>
 
-    <!-- Register -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-register.html">
-        <i class="bi bi-card-list"></i>
-        <span>Register</span>
-      </a>
-    </li>
-
-    <!-- Login -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-login.html">
+      <a class="nav-link collapsed" href="/logout">
         <i class="bi bi-box-arrow-in-right"></i>
-        <span>Login</span>
+        <span>Logout</span>
       </a>
     </li>
 
